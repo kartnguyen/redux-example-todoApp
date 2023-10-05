@@ -1,0 +1,15 @@
+.todos-container {
+    width: 800px;
+    margin: 50px auto 0;
+}
+
+.header {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 85% 1fr;
+}
+
+.name {
+    padding: 8px;
+    outline: none;
+}
