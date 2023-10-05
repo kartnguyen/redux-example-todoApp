@@ -1,7 +1,7 @@
 const initialState = {
   todos: [
     { id: 0, text: "Learn React", completed: true },
-    { id: 1, text: "Learn Redux", completed: false, color: "purple" },
+    { id: 1, text: "Learn Redux", completed: false, color: "green" },
   ],
   filters: {
     status: "Active",
@@ -27,15 +27,21 @@ export default function appReducer(state = initialState, action) {
     case "todos/removed": {
       return {
         ...state,
-        todos: state.todos.filter((item) => {
-          item.id === action.payload.id;
-        }),
+        todos: state.todos.filter((item) => item.id !== action.payload.id),
       };
     }
-    case "todos/makealldone": {
+    case "todos/markalldone": {
       return {
         ...state,
-        todos: [...state.todos, { completed: true }],
+        todos: state.todos.map((item) =>
+          item.completed === true ? item : { ...item, completed: true }
+        ),
+      };
+    }
+    case "todos/deleteallcompleted": {
+      return {
+        ...state,
+        todos: state.todos.filter((item) => item.completed !== true),
       };
     }
     case "todos/deleteall": {
@@ -47,21 +53,21 @@ export default function appReducer(state = initialState, action) {
     case "todos/toggle": {
       return {
         ...state,
-        todos: state.todos.map((item) => {
+        todos: state.todos.map((item) =>
           item.id === action.payload.id
             ? { ...item, completed: !item.completed }
-            : item;
-        }),
+            : item
+        ),
       };
     }
     case "todos/colored": {
       return {
         ...state,
-        todos: state.todos.map((item) => {
+        todos: state.todos.map((item) =>
           item.id === action.payload.id
             ? { ...item, color: action.payload.color }
-            : item;
-        }),
+            : item
+        ),
       };
     }
     // Xử lý các loại hành động khác

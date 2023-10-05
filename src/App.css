@@ -3,13 +3,63 @@
     margin: 50px auto 0;
 }
 
-.header {
-    display: grid;
-    gap: 12px;
-    grid-template-columns: 85% 1fr;
+.ant-card-head-title {
+    font-size: 36px;
+    color: #1677FF;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.sub-title {
+    color: tomato;
 }
 
 .name {
+    width: 100%;
     padding: 8px;
     outline: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+}
+
+.name:focus {
+    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+}
+
+.input-container {
+    position: relative;
+}
+
+.suffix {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: gray;
+}
+
+.filter {
+    display: flex;
+    flex-direction: column;
+}
+
+.red .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: red;
+    border-color: red;
+}
+
+.blue .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: blue;
+    border-color: blue;
+}
+
+.green .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: green;
+    border-color: green;
+}
+
+.orange .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: orange;
+    border-color: orange;
 }

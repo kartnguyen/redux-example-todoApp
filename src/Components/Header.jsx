@@ -1,22 +1,28 @@
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Header = () => {
-  const { register, handleSubmit } = useForm();
-  const todos = useSelector((state) => state.todos);
+  const { register, handleSubmit, reset } = useForm();
   const dispatch = useDispatch();
   const onSubmit = (data) => {
-    dispatch({type: "a"})
+    if (data.text.trim() === "") {
+      alert("Invalid text");
+      return;
+    }
+    dispatch({ type: "todos/added", payload: data });
+    reset();
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="header">
-      <input
-        {...register("text")}
-        placeholder="New Todos???"
-        className="name"
-      />
-      <input type="submit" value="Create" style={{ cursor: "pointer" }} />
+      <div className="input-container">
+        <input
+          {...register("text")}
+          placeholder="New Todos???"
+          className="name"
+        />
+        <span className="suffix">Enter</span>
+      </div>
     </form>
   );
 };

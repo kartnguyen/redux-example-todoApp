@@ -1,12 +1,24 @@
-import { ClearOutlined } from "@ant-design/icons";
+import { CloseOutlined } from "@ant-design/icons";
 import { Button, Row, Col, Switch, Select } from "antd";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const TodoItem = () => {
+  const dispatch = useDispatch();
   const todos = useSelector((state) => state.todos);
 
+  const onRemoved = (id) => {
+    if (confirm("Are you sure you want to remove this todo?"))
+      dispatch({ type: "todos/removed", payload: { id } });
+  };
+  const setColor = ({ id, color }) => {
+    dispatch({ type: "todos/colored", payload: { id, color } });
+  };
+  const toggleState = (id) => {
+    dispatch({ type: "todos/toggle", payload: { id } });
+  };
+
   return (
-    <div style={{ margin: "32px 0" }}>
+    <div className="todo-items" style={{ margin: "32px 0" }}>
       {todos.map((todo) => (
         <Row
           key={todo.id}
@@ -20,17 +32,27 @@ const TodoItem = () => {
         >
           <Col flex="50px" style={{ alignSelf: "center" }}>
             <Switch
+              onChange={() => toggleState(todo.id)}
               checked={todo.completed}
               checkedChildren="Completed"
               unCheckedChildren="Active"
             ></Switch>
           </Col>
           <Col flex="auto" offset={1} style={{ alignSelf: "center" }}>
-            <h4>{todo.text}</h4>
+            <h3
+              style={{
+                color: todo.color,
+                textDecoration: todo.completed ? "line-through" : "",
+              }}
+            >
+              {todo.text}
+            </h3>
           </Col>
           <Col flex="100px">
             <Select
-              style={{ width: "100%", height: "100%" }}
+              defaultValue={todo.color}
+              popupMatchSelectWidth={false}
+              style={{ width: 95 }}
               options={[
                 { value: "", label: "" },
                 { value: "red", label: "Red" },
@@ -39,11 +61,12 @@ const TodoItem = () => {
                 { value: "orange", label: "Orange" },
               ]}
               placeholder="Color"
+              onChange={(color) => setColor({ id: todo.id, color })}
             />
           </Col>
-          <Col flex="100px" offset={1}>
-            <Button style={{ width: "100%", height: "100%" }}>
-              <ClearOutlined />
+          <Col>
+            <Button onClick={() => onRemoved(todo.id)}>
+              <CloseOutlined />
             </Button>
           </Col>
         </Row>
