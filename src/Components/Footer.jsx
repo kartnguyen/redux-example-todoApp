@@ -1,5 +1,6 @@
 import { Button, Checkbox, Col, Radio, Row, Space } from "antd";
 import { useDispatch, useSelector } from "react-redux";
+import { colors, status } from "../assets/service.js";
 
 const Footer = () => {
   const dispatch = useDispatch();
@@ -8,7 +9,7 @@ const Footer = () => {
   const remanining = todos.filter((todo) => todo.completed !== true).length;
 
   const onMarkAllDone = () => {
-    dispatch({ type: "todos/markalldone", paypload: "" });
+    dispatch({ type: "todos/markalldone" });
   };
 
   const onDeleteAllCompleted = () => {
@@ -25,6 +26,14 @@ const Footer = () => {
   const onDeleteAll = () => {
     if (confirm("Do you want to delete all todos?"))
       dispatch({ type: "todos/deleteall" });
+  };
+
+  const onChangeStatus = (status) => {
+    dispatch({ type: "filter/changestatus", payload: { status } });
+  };
+
+  const onChangeColor = (color) => {
+    dispatch({ type: "filter/changecolor", payload: { color } });
   };
 
   return (
@@ -47,29 +56,31 @@ const Footer = () => {
         </Col>
         <Col span={6}>
           <h4>Filter by status</h4>
-          <Radio.Group value={"all"}>
+          <Radio.Group
+            defaultValue={"All"}
+            onChange={(e) => onChangeStatus(e.target.value)}
+          >
             <Space direction="vertical">
-              <Radio value={"all"}>All</Radio>
-              <Radio value={"active"}>Active</Radio>
-              <Radio value={"completed"}>Completed</Radio>
+              {status.map((status) => (
+                <Radio key={status} value={status}>
+                  {status}
+                </Radio>
+              ))}
             </Space>
           </Radio.Group>
         </Col>
         <Col span={6}>
           <h4>Filter by color</h4>
           <div className="filter">
-            <Checkbox className="red">
-              <span style={{ color: "red" }}>Red</span>
-            </Checkbox>
-            <Checkbox className="blue">
-              <span style={{ color: "blue" }}>Blue</span>
-            </Checkbox>
-            <Checkbox className="green">
-              <span style={{ color: "green" }}>Green</span>
-            </Checkbox>
-            <Checkbox className="orange">
-              <span style={{ color: "orange" }}>Orange</span>
-            </Checkbox>
+            {colors.map((color) => (
+              <Checkbox
+                className={color}
+                key={color}
+                onChange={() => onChangeColor(color)}
+              >
+                <span style={{ color: color }}>{color}</span>
+              </Checkbox>
+            ))}
           </div>
         </Col>
         <Col span={6} align="right">

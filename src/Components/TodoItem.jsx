@@ -4,22 +4,47 @@ import { useDispatch, useSelector } from "react-redux";
 
 const TodoItem = () => {
   const dispatch = useDispatch();
-  const todos = useSelector((state) => state.todos);
+  const filteredTodos = useSelector((state) => {
+    const filteredByStatus = state.todos.filter((item) => {
+      if (state.filters.status === "All") {
+        return true;
+      } else if (state.filters.status === "Active") {
+        return !item.completed;
+      } else if (state.filters.status === "Completed") {
+        return item.completed;
+      }
+      return true;
+    });
+
+    const filteredByColor = filteredByStatus.filter((item) => {
+      console.log(state.filters);
+      if (state.filters.colors.length === 0) {
+        return true;
+      } else {
+        return state.filters.colors.includes(item.color);
+      }
+    });
+
+    return filteredByColor;
+  }, []);
 
   const onRemoved = (id) => {
     if (confirm("Are you sure you want to remove this todo?"))
       dispatch({ type: "todos/removed", payload: { id } });
   };
   const setColor = ({ id, color }) => {
-    dispatch({ type: "todos/colored", payload: { id, color } });
+    if (color !== filteredTodos.find((todo) => todo.id === id).color) {
+      dispatch({ type: "todos/colored", payload: { id, color } });
+    }
   };
+
   const toggleState = (id) => {
     dispatch({ type: "todos/toggle", payload: { id } });
   };
 
   return (
-    <div className="todo-items" style={{ margin: "32px 0" }}>
-      {todos.map((todo) => (
+    <div className="todo-items">
+      {filteredTodos.map((todo) => (
         <Row
           key={todo.id}
           align="center"

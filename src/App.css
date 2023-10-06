@@ -3,6 +3,20 @@
     margin: 50px auto 0;
 }
 
+.todo-items {
+    margin-top: 32px;
+    min-height: 100px;
+}
+
+.footer {
+    padding-top: 24px;
+    border-top: 1px solid #ccc;
+}
+
+.ant-row:last-child {
+    border: none !important;
+}
+
 .ant-card-head-title {
     font-size: 36px;
     color: #1677FF;
@@ -44,22 +58,26 @@
     flex-direction: column;
 }
 
-.red .ant-checkbox-checked .ant-checkbox-inner {
-    background-color: red;
+.Red .ant-checkbox-checked .ant-checkbox-inner,
+.Red:hover .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: red !important;
     border-color: red;
 }
 
-.blue .ant-checkbox-checked .ant-checkbox-inner {
-    background-color: blue;
+.Blue .ant-checkbox-checked .ant-checkbox-inner,
+.Blue:hover .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: blue !important;
     border-color: blue;
 }
 
-.green .ant-checkbox-checked .ant-checkbox-inner {
-    background-color: green;
+.Green .ant-checkbox-checked .ant-checkbox-inner,
+.Green:hover .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: green !important;
     border-color: green;
 }
 
-.orange .ant-checkbox-checked .ant-checkbox-inner {
-    background-color: orange;
+.Orange .ant-checkbox-checked .ant-checkbox-inner,
+.Orange:hover .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: orange !important;
     border-color: orange;
 }

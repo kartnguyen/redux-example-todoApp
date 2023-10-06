@@ -4,8 +4,8 @@ const initialState = {
     { id: 1, text: "Learn Redux", completed: false, color: "green" },
   ],
   filters: {
-    status: "Active",
-    colors: ["red", "blue"],
+    status: "",
+    colors: [],
   },
 };
 
@@ -70,6 +70,29 @@ export default function appReducer(state = initialState, action) {
         ),
       };
     }
+    case "filter/changestatus": {
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          status: action.payload.status,
+        },
+      };
+    }
+    case "filter/changecolor": {
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          colors: state.filters.colors.map((item) => {
+            item !== action.payload.color
+              ? { ...item, a: action.payload.color }
+              : !item;
+          }),
+        },
+      };
+    }
+
     // Xử lý các loại hành động khác
 
     default: {
