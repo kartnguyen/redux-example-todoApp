@@ -1,8 +1,5 @@
 const initialState = {
-  todos: [
-    { id: 0, text: "Learn React", completed: true },
-    { id: 1, text: "Learn Redux", completed: false, color: "green" },
-  ],
+  todos: [],
   filters: {
     status: "",
     colors: [],
@@ -86,7 +83,7 @@ export default function appReducer(state = initialState, action) {
           ...state.filters,
           colors: state.filters.colors.map((item) => {
             item !== action.payload.color
-              ? { ...item, a: action.payload.color }
+              ? { ...item, color: action.payload.color }
               : !item;
           }),
         },
