@@ -8,19 +8,14 @@ const Footer = () => {
 
   const remanining = todos.filter((todo) => todo.completed !== true).length;
 
+  const completedList = todos.filter((todo) => todo.completed === true).length;
+
   const onMarkAllDone = () => {
     dispatch({ type: "todos/markalldone" });
   };
 
   const onDeleteAllCompleted = () => {
-    const completedList = todos.filter(
-      (todo) => todo.completed === true
-    ).length;
     dispatch({ type: "todos/deleteallcompleted" });
-    if (completedList === 0) {
-      alert("There are no completed todo!!!");
-      return;
-    }
   };
 
   const onDeleteAll = () => {
@@ -84,7 +79,12 @@ const Footer = () => {
           </div>
         </Col>
         <Col span={6} align="right">
-          <Button type="primary" block onClick={onMarkAllDone}>
+          <Button
+            type="primary"
+            block
+            onClick={onMarkAllDone}
+            disabled={remanining ? false : true}
+          >
             Mark All Completed
           </Button>
           <Button
@@ -93,10 +93,17 @@ const Footer = () => {
             style={{ margin: "8px 0" }}
             block
             onClick={onDeleteAllCompleted}
+            disabled={completedList ? false : true}
           >
             Delete All Completed
           </Button>
-          <Button type="primary" danger block onClick={onDeleteAll}>
+          <Button
+            type="primary"
+            danger
+            block
+            onClick={onDeleteAll}
+            disabled={todos.length ? false : true}
+          >
             Delete All Todos
           </Button>
         </Col>

@@ -17,7 +17,6 @@ const TodoItem = () => {
     });
 
     const filteredByColor = filteredByStatus.filter((item) => {
-      console.log(state.filters);
       if (state.filters.colors.length === 0) {
         return true;
       } else {
@@ -26,7 +25,7 @@ const TodoItem = () => {
     });
 
     return filteredByColor;
-  }, []);
+  });
 
   const onRemoved = (id) => {
     if (confirm("Are you sure you want to remove this todo?"))
@@ -79,11 +78,10 @@ const TodoItem = () => {
               popupMatchSelectWidth={false}
               style={{ width: 95 }}
               options={[
-                { value: "", label: "" },
-                { value: "red", label: "Red" },
-                { value: "blue", label: "Blue" },
-                { value: "green", label: "Green" },
-                { value: "orange", label: "Orange" },
+                { value: "Red", label: "Red" },
+                { value: "Blue", label: "Blue" },
+                { value: "Green", label: "Green" },
+                { value: "Orange", label: "Orange" },
               ]}
               placeholder="Color"
               onChange={(color) => setColor({ id: todo.id, color })}

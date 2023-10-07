@@ -2,7 +2,7 @@ const initialState = {
   todos: [],
   filters: {
     status: "",
-    colors: [],
+    colors: "",
   },
 };
 
@@ -77,15 +77,25 @@ export default function appReducer(state = initialState, action) {
       };
     }
     case "filter/changecolor": {
+      const colorLength = state.filters.colors.length;
+      const updatedColors = [...state.filters.colors];
+
+      if (colorLength > 0) {
+        const colorIndex = updatedColors.indexOf(action.payload.color);
+
+        if (colorIndex === -1) {
+          updatedColors.push(action.payload.color);
+        } else {
+          updatedColors.splice(colorIndex, 1);
+        }
+      } else {
+        updatedColors.push(action.payload.color);
+      }
       return {
         ...state,
         filters: {
           ...state.filters,
-          colors: state.filters.colors.map((item) => {
-            item !== action.payload.color
-              ? { ...item, color: action.payload.color }
-              : !item;
-          }),
+          colors: updatedColors,
         },
       };
     }

@@ -1,11 +1,12 @@
 .todos-container {
     width: 800px;
-    margin: 50px auto 0;
+    margin: 30px auto 0;
 }
 
 .todo-items {
     margin-top: 32px;
-    min-height: 100px;
+    height: 330px;
+    overflow-y: auto;
 }
 
 .footer {
